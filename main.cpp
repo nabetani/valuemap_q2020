@@ -4,10 +4,12 @@
 #include <unordered_map>
 #include <vector>
 
-struct umap20 {
-  static std::unordered_map<int, int> values_;
+template< template< typename, typename > typename map_t >
+struct map20t {
+  using map_type = map_t<int, int>;
+  static map_type values_;
   static void init() {
-    values_ = std::unordered_map<int, int>{
+    values_ = map_type{
 #define KEY_VALUE(k, v) {k, v},
 #include "values_20.hxx"
 #undef KEY_VALUE
@@ -22,7 +24,18 @@ struct umap20 {
   }
 };
 
-std::unordered_map<int, int> umap20::values_;
+template< typename k, typename v >
+using unordered_map_ = std::unordered_map<k,v>;
+using umap20 = map20t<unordered_map_>;
+template<>
+umap20::map_type umap20::values_={};
+
+template< typename k, typename v >
+using map_ = std::map<k,v>;
+using map20 = map20t<map_>;
+template<>
+map20::map_type map20::values_={};
+
 
 template <typename T> void measure() {
   T::init();
@@ -42,6 +55,7 @@ template <typename T> void measure() {
 }
 
 int main() {
+  measure<map20>();
   measure<umap20>();
   return 0;
 }
