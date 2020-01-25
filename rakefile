@@ -12,8 +12,8 @@ VALUES_HXX = SIZES.map{ |e| "values_#{e}.hxx" }
 
 OPTS = "-std=c++17 -Wall"
 
-SIZES.each do |size|
-  file "values_#{size}.hxx" => "make_values.rb" do
+VALUES_HXX.each do |v|
+  file v => "make_values.rb" do
     ruby "make_values.rb"
   end
 end
