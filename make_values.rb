@@ -7,8 +7,10 @@ def uniq_values(size,seed)
   return h.keys
 end
 
+SIZES = [1,10,100,100].product([10,3]).map{ |e| e.inject(&:*) }.sort.uniq - [1]
+
 File.open( "values.hxx", "w" ) do |f|
-  [ 2, 20, 200, 2000 ].each do |size|
+  SIZES.each do |size|
     values = uniq_values(size,0)
     f.puts( "#define KEY_VALUES_#{size} \\" )
     keys = uniq_values(size,1)

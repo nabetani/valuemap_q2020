@@ -6,7 +6,7 @@ TARGETS = [
 desc "build binaries"
 task :bin => TARGETS.map{ |e| File.join("bin", e[:name] ) }
 
-OPTS = "-std=c++17 -Wall"
+OPTS = "-std=c++17 -Wall -O2"
 
 file "values.hxx" => "make_values.rb" do
   ruby "make_values.rb"

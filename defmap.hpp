@@ -6,6 +6,9 @@
 #include "values.hxx"
 #include "vector_map.h"
 
+#define NS CONCAT_MACRO(size,SIZE)
+#define KEY_VALUES CONCAT_MACRO(KEY_VALUES_, SIZE)
+
 namespace NS {
 template <template <typename, typename> typename map_t> struct mapt {
   static constexpr size_t size() { return SIZE; }
@@ -53,3 +56,7 @@ struct swith_case {
 };
 
 } // namespace NS
+
+#undef NS
+#undef KEY_VALUES
+

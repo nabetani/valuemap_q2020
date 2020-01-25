@@ -2,60 +2,54 @@
 #include <iostream>
 #include <cstdlib>
 
-#define KEY_VALUES KEY_VALUES_2
-#define SIZE 2
-#define NS size2
-#include "defmap.hpp"
-#undef NS
-#undef SIZE
-#undef KEY_VALUES
+#if ! defined CONCAT_MACRO_IMPL
+#define CONCAT_MACRO_IMPL(a,b) a##b
+#endif
 
-#define KEY_VALUES KEY_VALUES_20
-#define SIZE 20
-#define NS size20
-#include "defmap.hpp"
-#undef NS
-#undef SIZE
-#undef KEY_VALUES
+#if ! defined CONCAT_MACRO
+#define CONCAT_MACRO(a,b) CONCAT_MACRO_IMPL(a,b)
+#endif
 
-#define KEY_VALUES KEY_VALUES_200
-#define SIZE 200
-#define NS size200
+#define SIZE 3
 #include "defmap.hpp"
-#undef NS
 #undef SIZE
-#undef KEY_VALUES
 
-#define KEY_VALUES KEY_VALUES_2000
-#define SIZE 2000
-#define NS size2000
+#define SIZE 10
 #include "defmap.hpp"
-#undef NS
 #undef SIZE
-#undef KEY_VALUES
+
+#define SIZE 30
+#include "defmap.hpp"
+#undef SIZE
+
+#define SIZE 100
+#include "defmap.hpp"
+#undef SIZE
+
+#define SIZE 300
+#include "defmap.hpp"
+#undef SIZE
+
+#define SIZE 1000
+#include "defmap.hpp"
+#undef SIZE
 
 #include "measure.hpp"
 
 int main(int argc, char const *argv[]) {
   int k = argc < 2 ? 0 : std::atoi(argv[1]);
-  measure<size2::swith_case>("switch", k);
-  measure<size2::map>("map", k);
-  measure<size2::umap>("unordered_map", k);
-  measure<size2::vmap>("vector_map", k);
+  #define MEASURE(s)\
+  measure<CONCAT_MACRO(size,s)::swith_case>("switch", k);\
+  measure<CONCAT_MACRO(size,s)::map>("map", k);\
+  measure<CONCAT_MACRO(size,s)::umap>("unordered_map", k);\
+  measure<CONCAT_MACRO(size,s)::vmap>("vector_map", k);
 
-  measure<size20::swith_case>("switch", k);
-  measure<size20::map>("map", k);
-  measure<size20::umap>("unordered_map", k);
-  measure<size20::vmap>("vector_map", k);
+  MEASURE(3)
+  MEASURE(10)
+  MEASURE(30)
+  MEASURE(100)
+  MEASURE(300)
+  MEASURE(1000)
 
-  measure<size200::swith_case>("switch", k);
-  measure<size200::map>("map", k);
-  measure<size200::umap>("unordered_map", k);
-  measure<size200::vmap>("vector_map", k);
-
-  measure<size2000::swith_case>("switch", k);
-  measure<size2000::map>("map", k);
-  measure<size2000::umap>("unordered_map", k);
-  measure<size2000::vmap>("vector_map", k);
   return 0;
 }
