@@ -6,20 +6,14 @@ TARGETS = [
 desc "build binaries"
 task :bin => TARGETS.map{ |e| File.join("bin", e[:name] ) }
 
-SIZES = [2,20,200,2000]
-
-VALUES_HXX = SIZES.map{ |e| "values_#{e}.hxx" }
-
 OPTS = "-std=c++17 -Wall"
 
-VALUES_HXX.each do |v|
-  file v => "make_values.rb" do
-    ruby "make_values.rb"
-  end
+file "values.hxx" => "make_values.rb" do
+  ruby "make_values.rb"
 end
 
 TARGETS.each do |cc:,name:|
-  file File.join("bin", name ) => ["main.cpp", "defmap.hpp", "vector_map.h", *VALUES_HXX ] do 
+  file File.join("bin", name ) => ["main.cpp", "measure.hpp", "defmap.hpp", "vector_map.h", "values.hxx" ] do 
     FileUtils.mkdir_p( "bin" )
     sh "#{cc} #{OPTS} -o bin/#{name} main.cpp" 
   end 

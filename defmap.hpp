@@ -3,15 +3,17 @@
 #include <unordered_map>
 #include <vector>
 
+#include "values.hxx"
 #include "vector_map.h"
 
 template <template <typename, typename> typename map_t> struct map20t {
+  static constexpr size_t size() { return 20; }
   using map_type = map_t<int, int>;
   static map_type values_;
   static void init() {
     values_ = map_type{
 #define KEY_VALUE(k, v) {k, v},
-#include "values_20.hxx"
+        KEY_VALUES_20
 #undef KEY_VALUE
     };
   }
