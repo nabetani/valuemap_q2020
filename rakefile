@@ -1,0 +1,25 @@
+TARGETS = [
+  { cc:"clang++", name:"out_clang" },
+  { cc:"g++-9", name:"out_gcc" },
+]
+
+task :default => TARGETS.map{ |e| File.join("bin", e[:name] ) }
+
+SIZES = [2,20,200,2000]
+
+VALUES_HXX = SIZES.map{ |e| "values_#{e}.hxx" }
+
+OPTS = "-std=c++17 -Wall"
+
+SIZES.each do |size|
+  file "values_#{size}.hxx" => "make_values.rb" do
+    ruby "make_values.rb"
+  end
+end
+
+TARGETS.each do |cc:,name:|
+  file File.join("bin", name ) => ["main.cpp", *VALUES_HXX ] do 
+    FileUtils.mkdir_p( "bin" )
+    sh "#{cc} #{OPTS} -o bin/#{name} main.cpp" 
+  end 
+end
