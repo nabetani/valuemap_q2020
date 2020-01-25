@@ -3,7 +3,8 @@ TARGETS = [
   { cc:"g++-9", name:"out_gcc" },
 ]
 
-task :default => TARGETS.map{ |e| File.join("bin", e[:name] ) }
+desc "build binaries"
+task :bin => TARGETS.map{ |e| File.join("bin", e[:name] ) }
 
 SIZES = [2,20,200,2000]
 
