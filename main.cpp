@@ -1,5 +1,6 @@
 #include <chrono>
 #include <iostream>
+#include <cstdlib>
 
 #define KEY_VALUES KEY_VALUES_2
 #define SIZE 2
@@ -35,21 +36,26 @@
 
 #include "measure.hpp"
 
-int main() {
-  measure<size2::map>("map");
-  measure<size2::umap>("unordered_map");
-  measure<size2::vmap>("vector_map");
+int main(int argc, char const *argv[]) {
+  int k = argc < 2 ? 0 : std::atoi(argv[1]);
+  measure<size2::swith_case>("switch", k);
+  measure<size2::map>("map", k);
+  measure<size2::umap>("unordered_map", k);
+  measure<size2::vmap>("vector_map", k);
 
-  measure<size20::map>("map");
-  measure<size20::umap>("unordered_map");
-  measure<size20::vmap>("vector_map");
+  measure<size20::swith_case>("switch", k);
+  measure<size20::map>("map", k);
+  measure<size20::umap>("unordered_map", k);
+  measure<size20::vmap>("vector_map", k);
 
-  measure<size200::map>("map");
-  measure<size200::umap>("unordered_map");
-  measure<size200::vmap>("vector_map");
+  measure<size200::swith_case>("switch", k);
+  measure<size200::map>("map", k);
+  measure<size200::umap>("unordered_map", k);
+  measure<size200::vmap>("vector_map", k);
 
-  measure<size2000::map>("map");
-  measure<size2000::umap>("unordered_map");
-  measure<size2000::vmap>("vector_map");
+  measure<size2000::swith_case>("switch", k);
+  measure<size2000::map>("map", k);
+  measure<size2000::umap>("unordered_map", k);
+  measure<size2000::vmap>("vector_map", k);
   return 0;
 }

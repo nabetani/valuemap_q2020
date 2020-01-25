@@ -2,7 +2,7 @@
 
 #include <cstdio>
 
-template <typename T> void measure(char const *name) {
+template <typename T> void measure(char const *name, int diff) {
   T::init();
   using namespace std::chrono;
   int sum = 0;
@@ -10,28 +10,28 @@ template <typename T> void measure(char const *name) {
   auto t0 = high_resolution_clock::now();
   if constexpr (T::size() == 2) {
     for (int i = 0; i < trial; ++i) {
-#define KEY_VALUE(k, v) sum += T::get(k, 0);
+#define KEY_VALUE(k, v) sum += T::get(k + diff, 0);
       KEY_VALUES_2
 #undef KEY_VALUE
     }
   }
   if constexpr (T::size() == 20) {
     for (int i = 0; i < trial; ++i) {
-#define KEY_VALUE(k, v) sum += T::get(k, 0);
+#define KEY_VALUE(k, v) sum += T::get(k + diff, 0);
       KEY_VALUES_20
 #undef KEY_VALUE
     }
   }
   if constexpr (T::size() == 200) {
     for (int i = 0; i < trial; ++i) {
-#define KEY_VALUE(k, v) sum += T::get(k, 0);
+#define KEY_VALUE(k, v) sum += T::get(k + diff, 0);
       KEY_VALUES_200
 #undef KEY_VALUE
     }
   }
   if constexpr (T::size() == 2000) {
     for (int i = 0; i < trial; ++i) {
-#define KEY_VALUE(k, v) sum += T::get(k, 0);
+#define KEY_VALUE(k, v) sum += T::get(k + diff, 0);
       KEY_VALUES_2000
 #undef KEY_VALUE
     }

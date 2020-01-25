@@ -38,4 +38,18 @@ template <> map::map_type map::values_ = {};
 
 using vmap = mapt<vector_map>;
 template <> vmap::map_type vmap::values_ = {};
+
+struct swith_case {
+  static constexpr size_t size() { return SIZE; }
+  static void init() {}
+  static int get(int key, int fallback) {
+    switch (key) {
+#define KEY_VALUE(k, v) case k: return v;
+        KEY_VALUES
+#undef KEY_VALUE
+    }
+    return fallback;
+  }
+};
+
 } // namespace NS
