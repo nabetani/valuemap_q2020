@@ -19,7 +19,7 @@ VALUES_HXX.each do |v|
 end
 
 TARGETS.each do |cc:,name:|
-  file File.join("bin", name ) => ["main.cpp", *VALUES_HXX ] do 
+  file File.join("bin", name ) => ["main.cpp", "defmap.hpp", "vector_map.h", *VALUES_HXX ] do 
     FileUtils.mkdir_p( "bin" )
     sh "#{cc} #{OPTS} -o bin/#{name} main.cpp" 
   end 
