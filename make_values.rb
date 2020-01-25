@@ -7,7 +7,8 @@ def uniq_values(size,seed)
   return h.keys
 end
 
-SIZES = [1,10,100,100].product([10,3]).map{ |e| e.inject(&:*) }.sort.uniq - [1]
+SIZES = [ 3, 10, 30, 100, 300 ]
+
 
 File.open( "values.hxx", "w" ) do |f|
   SIZES.each do |size|

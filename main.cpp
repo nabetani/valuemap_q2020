@@ -30,9 +30,9 @@
 #include "defmap.hpp"
 #undef SIZE
 
-#define SIZE 1000
-#include "defmap.hpp"
-#undef SIZE
+// #define SIZE 1000
+// #include "defmap.hpp"
+// #undef SIZE
 
 #include "measure.hpp"
 
@@ -49,7 +49,7 @@ int main(int argc, char const *argv[]) {
   MEASURE(30)
   MEASURE(100)
   MEASURE(300)
-  MEASURE(1000)
+  // MEASURE(1000)
 
   return 0;
 }
