@@ -3,6 +3,13 @@ TARGETS = [
   { cc:"g++-9", name:"out_gcc" },
 ]
 
+desc "build graph"
+task :graph => [ "graph.pdf" ]
+
+file "graph.pdf" => [ "make_graph.rb", :bin ] do 
+  sh "bundle exec ruby make_graph.rb"
+end
+
 desc "build binaries"
 task :bin => TARGETS.map{ |e| File.join("bin", e[:name] ) }
 
